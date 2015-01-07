@@ -1,0 +1,50 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+
+public class EmailTest 
+{
+
+	@Test
+	public void testEmailStringStringStringString() 
+	{
+		Email testEmail = new Email("testreceiver@example.com","testsender@example.com","Test","Such test");
+		String toTest = testEmail.getTo();
+		assertEquals(testEmail.getTo(),"testreceiver@example.com");
+		assertEquals(testEmail.getFrom(),"testsender@example.com");
+		assertEquals(testEmail.getSubject(),"Test");
+		assertEquals(testEmail.getContent(),"Such test");
+	}
+
+	@Test
+	public void testEmailInputStream() 
+	{
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetTo() 
+	{
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetFrom() 
+	{
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetSubject() 
+	{
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetContent() 
+	{
+		fail("Not yet implemented");
+	}
+
+}

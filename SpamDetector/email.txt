@@ -1,0 +1,4 @@
+From: bob@neumont.edu
+To: jcummings@neumont.edu
+Subject: Howdy, stranger!
+What do you think of this new email system?

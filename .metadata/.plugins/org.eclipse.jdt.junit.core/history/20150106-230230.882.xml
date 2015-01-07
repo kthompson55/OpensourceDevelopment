@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="EmailTest" project="SpamDetector" tests="6" started="5" failures="0" errors="0" ignored="0">
+  <testsuite name="EmailTest" incomplete="true">
+    <testcase name="testGetSubject" classname="EmailTest" time="0.0"/>
+    <testcase name="testEmailStringStringStringString" classname="EmailTest" time="0.0"/>
+    <testcase name="testGetTo" classname="EmailTest" time="0.0"/>
+    <testcase name="testGetFrom" classname="EmailTest" time="0.0"/>
+    <testcase name="testEmailInputStream" classname="EmailTest" incomplete="true"/>
+    <testcase name="testGetContent" classname="EmailTest" incomplete="true"/>
+  </testsuite>
+</testrun>

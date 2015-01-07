@@ -1,0 +1,18 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+
+public class SpamDetectorTest {
+
+	@Test
+	public void testSpamDetector() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testIsSpam() {
+		fail("Not yet implemented");
+	}
+
+}

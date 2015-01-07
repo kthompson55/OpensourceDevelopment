@@ -1,0 +1,33 @@
+import static org.junit.Assert.*;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.junit.Test;
+
+
+public class SpamDetectorTest {
+
+	@Test
+	public void testSpamDetector() 
+	{
+		try
+		{
+			File spamFile = new File("antispam-table.txt");
+			InputStream ioStream = new FileInputStream(spamFile);
+			SpamDetector detector = new SpamDetector(ioStream);
+		}
+		catch (IOException e)
+		{
+			fail("Not valid file!");
+		}
+	}
+
+	@Test
+	public void testIsSpam() {
+		fail("Not yet implemented");
+	}
+
+}
