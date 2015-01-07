@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="EmailTest" project="SpamDetector" tests="11" started="11" failures="0" errors="0" ignored="0">
+  <testsuite name="EmailTest" time="0.012">
+    <testcase name="testGetSubject" classname="EmailTest" time="0.0"/>
+    <testcase name="testEmailStringStringStringString" classname="EmailTest" time="0.0"/>
+    <testcase name="testBadFileInputStream" classname="EmailTest" time="0.0"/>
+    <testcase name="testGetTo" classname="EmailTest" time="0.0"/>
+    <testcase name="testNullFrom" classname="EmailTest" time="0.0"/>
+    <testcase name="testNullSubject" classname="EmailTest" time="0.0"/>
+    <testcase name="testGetFrom" classname="EmailTest" time="0.0"/>
+    <testcase name="testEmailInputStream" classname="EmailTest" time="0.011"/>
+    <testcase name="testGetContent" classname="EmailTest" time="0.0"/>
+    <testcase name="testNullTo" classname="EmailTest" time="0.0"/>
+    <testcase name="testNullContent" classname="EmailTest" time="0.001"/>
+  </testsuite>
+</testrun>

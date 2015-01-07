@@ -1,0 +1,4 @@
+From: bob
+To: jcummings
+Subject: Howdy, stranger!
+What do you think of this new email system?

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="SpamDetectorTest" project="SpamDetector" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="SpamDetectorTest" time="2.176">
+    <testcase name="testIsNotSpam" classname="SpamDetectorTest" time="0.776"/>
+    <testcase name="testSpamDetector" classname="SpamDetectorTest" time="0.582"/>
+    <testcase name="testIsSpam" classname="SpamDetectorTest" time="0.818"/>
+  </testsuite>
+</testrun>
