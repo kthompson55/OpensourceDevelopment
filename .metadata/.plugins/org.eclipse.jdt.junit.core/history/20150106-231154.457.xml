@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="SpamDetectorTest" project="SpamDetector" tests="2" started="1" failures="0" errors="0" ignored="0">
-  <testsuite name="SpamDetectorTest" incomplete="true">
-    <testcase name="testSpamDetector" classname="SpamDetectorTest" incomplete="true"/>
-    <testcase name="testIsSpam" classname="SpamDetectorTest" incomplete="true"/>
-  </testsuite>
-</testrun>
