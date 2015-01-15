@@ -1,0 +1,40 @@
+<Views.ItemView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+android:orientation="vertical"
+android:paddingRight="@dimen/activity_horizontal_margin"
+android:paddingTop="@dimen/activity_vertical_margin"
+android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+
+
+<ImageView
+    android:layout_width="260dp"
+    android:layout_height="260dp"
+    android:id="@+id/bidItemImage"
+    />
+
+<TextView
+    android:layout_width="170dp"
+    android:layout_height="20dp"
+    android:id="@+id/bidItemLabel"
+    android:text="ITEM NAME"/>
+
+<TextView
+    android:layout_margin="0dp"
+    android:layout_width="90dp"
+    android:layout_height="20dp"
+    android:id="@+id/bidCountLabel"
+    android:text="Bid Count: 0"/>
+
+<Button
+    style="?android:attr/buttonStyleSmall"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Bid"
+    android:width="150dp"
+    android:id="@+id/bidButton"
+    android:layout_marginBottom="51dp"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:onClick="incrementBid"/>
+</Views.ItemView>
