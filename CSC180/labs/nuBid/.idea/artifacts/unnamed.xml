@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="apk" name="unnamed">
+  <artifact type="apk" build-on-make="true" name="unnamed">
     <output-path>$PROJECT_DIR$/../../submissions/labs/nuBid</output-path>
     <properties id="android-properties">
       <options>
