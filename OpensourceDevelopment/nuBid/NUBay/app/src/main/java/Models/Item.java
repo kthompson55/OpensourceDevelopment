@@ -2,30 +2,40 @@ package Models;
 
 import android.media.Image;
 
+import java.math.BigDecimal;
+
 /**
  * Created by kthompson on 1/23/2015.
  */
 public class Item
 {
-    private int itemBidPrice;
+    private long id;
+    private static int id_counter = 0;
+    private BigDecimal itemBidPrice;
     private String itemName;
     private String itemDescription;
     private int imageResourceId;
 
     public Item(String name, String description, int imgID)
     {
-        itemBidPrice = 0;
+        id = id_counter++;
+        itemBidPrice = new BigDecimal(0);
         itemName = name;
         itemDescription = description;
         imageResourceId = imgID;
     }
 
-    public void increaseBid()
+    public long getId()
     {
-        itemBidPrice++;
+        return id;
     }
 
-    public int getPrice()
+    public void increaseBid(BigDecimal increase)
+    {
+        itemBidPrice.add(increase);
+    }
+
+    public BigDecimal getPrice()
     {
         return itemBidPrice;
     }

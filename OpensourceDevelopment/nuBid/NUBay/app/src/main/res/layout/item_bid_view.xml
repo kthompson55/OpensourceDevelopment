@@ -39,8 +39,7 @@
         android:id="@+id/bidButton"
         android:layout_marginBottom="51dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="incrementBid"/>
+        android:layout_centerHorizontal="true"/>
 />
 
 </Views.ItemBidView>

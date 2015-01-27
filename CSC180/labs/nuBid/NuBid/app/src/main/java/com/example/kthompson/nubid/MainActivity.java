@@ -33,14 +33,6 @@ public class MainActivity extends Activity
         setContentView(view);
     }
 
-    public void incrementBid(View view)
-    {
-        if(view instanceof ItemView)
-        {
-            ((Views.ItemView)view).incrementBid();
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

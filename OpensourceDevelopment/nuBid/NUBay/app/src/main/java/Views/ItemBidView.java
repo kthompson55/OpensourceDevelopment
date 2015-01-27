@@ -10,7 +10,11 @@ import android.widget.TextView;
 
 import com.example.kthompson.nubay.R;
 
+import java.math.BigDecimal;
+
+import Interfaces.ViewListener;
 import Models.Item;
+import Service.ItemService;
 
 /**
  * Created by kthompson on 1/23/2015.
@@ -28,11 +32,6 @@ public class ItemBidView extends LinearLayout
     {
         super(context,attrs);
         bidItem = item;
-    }
-
-    public interface ViewListener
-    {
-        public void onBidPress();
     }
 
     private ViewListener listener;
@@ -55,18 +54,18 @@ public class ItemBidView extends LinearLayout
             @Override
             public void onClick(View v)
             {
-                listener.onBidPress();
+                listener.onPress();
             }
         });
         bidItemName.setText(bidItem.getName());
         bidItemDescription.setText(bidItem.getDescription());
+        bidItemPriceLabel.setText("Item Price: " + bidItem.getPrice());
         bidItemImage.setImageResource(bidItem.getImage());
     }
 
-    public void incrementBid()
+    public void incrementBid(BigDecimal increment)
     {
-        bidItem.increaseBid();
-        String newLabel = "Current Bid: " + bidItem.getPrice();
-        bidItemPriceLabel.setText((CharSequence)newLabel);
+        bidItem = ItemService.getInstance().bid(bidItem.getId(),increment);
+        bidItemPriceLabel.setText("Item Price: " + bidItem.getPrice());
     }
 }

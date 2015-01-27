@@ -1,0 +1,5 @@
+C:\Users\kthompson\Desktop\Homework\Java 1\Repository\OpensourceDevelopment\nuBid\NUBay\app\build\intermediates\classes\debug
+C:\Users\kthompson\Desktop\Homework\Java 1\Repository\OpensourceDevelopment\nuBid\NUBay\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-2a202aed6fbf24404e89a503b7d1e788c254abb2.jar
+C:\Users\kthompson\Desktop\Homework\Java 1\Repository\OpensourceDevelopment\nuBid\NUBay\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-b06b49cccefe90caaaafe7dd2a9cd5f2a992e642.jar
+C:\Users\kthompson\Desktop\Homework\Java 1\Repository\OpensourceDevelopment\nuBid\NUBay\app\build\intermediates\pre-dexed\debug\classes-939f141e332891e26d34377de4b03f0316ae6312.jar
+C:\Users\kthompson\Desktop\Homework\Java 1\Repository\OpensourceDevelopment\nuBid\NUBay\app\build\intermediates\pre-dexed\debug\classes-1f0e47ef92203b9f5f1c148f98e31eb90e420bbe.jar

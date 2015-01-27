@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Views.SearchItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_height="40dp"
+        android:layout_width="40dp"
+        android:id="@+id/searchItemImage"
+        />
+    
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="25dp"
+        android:id="@+id/searchItemName"
+        android:text="text"
+        />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="25dp"
+        android:id="@+id/searchItemPrice"
+        />
+
+    <Button
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:text="BID"
+        />
+
+</Views.SearchItemView><!-- From: file:/C:/Users/kthompson/Desktop/Homework/Java%201/Repository/OpensourceDevelopment/nuBid/NUBay/app/src/main/res/layout/item_search_view.xml -->

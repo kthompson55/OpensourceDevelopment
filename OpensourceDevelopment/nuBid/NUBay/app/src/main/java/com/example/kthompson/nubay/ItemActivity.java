@@ -6,6 +6,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.math.BigDecimal;
+
+import Interfaces.ViewListener;
 import Views.ItemBidView;
 
 /**
@@ -14,12 +17,13 @@ import Views.ItemBidView;
 public class ItemActivity extends Activity
 {
     private ItemBidView view;
-    private ItemBidView.ViewListener viewListener = new ItemBidView.ViewListener()
+    private ViewListener viewListener = new ViewListener()
     {
         @Override
-        public void onBidPress()
+        public void onPress()
         {
-            view.incrementBid();
+            view.incrementBid(new BigDecimal(5));
+            // INTENT HERE TO RETURN TO SEARCH
         }
     };
 
@@ -31,14 +35,6 @@ public class ItemActivity extends Activity
         view.setViewListener(viewListener);
 
         setContentView(view);
-    }
-
-    public void incrementBid(View view)
-    {
-        if(view instanceof ItemBidView)
-        {
-            ((Views.ItemBidView)view).incrementBid();
-        }
     }
 
     @Override
