@@ -48,6 +48,7 @@ public class ItemService {
         String[] tokens = query.split(" ");
         Stack<String> operators = new Stack<String>();
         Queue<String> output = new PriorityQueue<String>();
+        List<String> andBlocks = new ArrayList<String>();
 
         for(String token : tokens)
         {
@@ -57,49 +58,38 @@ public class ItemService {
             }
             else if(token.toLowerCase().equals("or"))
             {
-                while(operators.peek().equals("and"))
+                String andStatement = output.poll() + ",";
+                if(!operators.empty())
                 {
-                    operators.pop();
+                    while (operators.peek().equals("and"))
+                    {
+                        operators.pop();
+                        andStatement += output.poll() + ",";
+                        if(operators.empty()) break;
+                    }
                 }
                 operators.push(token);
+                andBlocks.add(andStatement);
             }
             else output.add(token);
         }
-
-        // each block of ands will contain a single string of the tags, separated by commas
-        List<String> andBlocks = new ArrayList<String>();
-        while(!output.isEmpty())
-        {
-            String builder = "";
-            if(!operators.empty()) {
-                while (operators.pop() != "OR") {
-                    builder += output.poll() + ",";
-                }
-            }
-            else
-            {
-                for(String o : output)
-                {
-                    builder += output.poll() + ",";
-                }
-            }
-
-            andBlocks.add(builder);
-        }
+        andBlocks.add(output.poll() + ",");
 
         // Sue me.
         for(Item i : items)
         {
-            boolean willAdd = true;
+            boolean addedOnce = false;
             for(String terms : andBlocks)
             {
                 String[] individualTerms = terms.split(",");
                 for(String curTerm : individualTerms)
                 {
-                    willAdd = willAdd && i.getName().contains(curTerm) || i.getDescription().contains(curTerm);
+                    boolean inName = i.getName().toLowerCase().contains(curTerm.toLowerCase());
+                    boolean inDesc = i.getDescription().toLowerCase().contains(curTerm.toLowerCase());
+                    addedOnce = addedOnce || (inName || inDesc);
                 }
             }
-            if(willAdd)
+            if(addedOnce)
             {
                 results.add(i);
             }
@@ -115,7 +105,7 @@ public class ItemService {
         return returnItem;
     }
 
-    private Item findItem(long id)
+    public Item findItem(long id)
     {
         for(Item i : items)
         {

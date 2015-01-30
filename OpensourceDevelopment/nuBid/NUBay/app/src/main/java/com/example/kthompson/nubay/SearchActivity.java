@@ -1,16 +1,13 @@
 package com.example.kthompson.nubay;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.util.logging.Handler;
-
+import Adapters.ItemAdapter;
 import Interfaces.ViewListener;
-import Models.Item;
 import Service.ItemService;
 import Views.SearchView;
 
@@ -24,13 +21,11 @@ public class SearchActivity extends Activity
         @Override
         public void onPress()
         {
-            if(!view.getQuery().equals(""))
+            String query = view.getQuery();
+            if(!query.equals(""))
             {
-                view.displayItems(ItemService.getInstance().search(view.getQuery()));
-            }
-            else
-            {
-                view.displayItems(ItemService.getInstance().getItems());
+                ItemAdapter adapter = createAdapter(query);
+                view.displayItems(adapter);
             }
         }
     };
@@ -66,5 +61,10 @@ public class SearchActivity extends Activity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private ItemAdapter createAdapter(String query)
+    {
+        return new ItemAdapter(this,ItemService.getInstance().search(query));
     }
 }
