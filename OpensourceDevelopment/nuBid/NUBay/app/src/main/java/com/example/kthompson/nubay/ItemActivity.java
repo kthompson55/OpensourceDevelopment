@@ -1,6 +1,8 @@
 package com.example.kthompson.nubay;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +11,8 @@ import android.view.View;
 import java.math.BigDecimal;
 
 import Interfaces.ViewListener;
+import Service.ItemService;
+import Views.CreateItemView;
 import Views.ItemBidView;
 
 /**
@@ -16,14 +20,29 @@ import Views.ItemBidView;
  */
 public class ItemActivity extends Activity
 {
+    private Context con;
+    private long itemID;
     private ItemBidView view;
     private ViewListener viewListener = new ViewListener()
     {
         @Override
-        public void onPress()
+        public void onTransferPress(long itemID)
         {
-            view.incrementBid(new BigDecimal(5));
             // INTENT HERE TO RETURN TO SEARCH
+            Intent i = new Intent(con, SearchActivity.class);
+            startActivity(i);
+        }
+
+        @Override
+        public void onPagePress(String itemName, String itemDesc, String startPrice, String startDate, String endDate)
+        {
+            view.incrementBid(new BigDecimal(.5));
+        }
+
+        @Override
+        public void onSearchPress()
+        {
+
         }
     };
 
@@ -31,8 +50,13 @@ public class ItemActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        itemID = this.getIntent().getLongExtra("itemID",1);
+
+        con = this;
+
         view = (ItemBidView) View.inflate(this, R.layout.item_bid_view, null);
         view.setViewListener(viewListener);
+        view.setItem(itemID);
 
         setContentView(view);
     }

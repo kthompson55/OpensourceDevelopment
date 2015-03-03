@@ -14,15 +14,25 @@ public class Item
     private BigDecimal itemBidPrice;
     private String itemName;
     private String itemDescription;
+    private String startDate;
+    private String endDate;
     private int imageResourceId;
 
-    public Item(String name, String description, int imgID)
+    public Item(String name, String description, BigDecimal sPrice, String sDate, String eDate, int imgID)
     {
         id = id_counter++;
         itemBidPrice = new BigDecimal(0);
         itemName = name;
         itemDescription = description;
+        itemBidPrice = sPrice;
+        startDate = sDate;
+        endDate = eDate;
         imageResourceId = imgID;
+    }
+
+    public void setId(long itemID)
+    {
+        id = itemID;
     }
 
     public long getId()
@@ -30,9 +40,14 @@ public class Item
         return id;
     }
 
-    public void increaseBid(BigDecimal increase)
+    public BigDecimal increaseBid(BigDecimal increase)
     {
-        itemBidPrice.add(increase);
+        return itemBidPrice.add(increase);
+    }
+
+    public void setPrice(BigDecimal price)
+    {
+        itemBidPrice = price;
     }
 
     public BigDecimal getPrice()
@@ -48,6 +63,16 @@ public class Item
     public String getDescription()
     {
         return itemDescription;
+    }
+
+    public String getStartDate()
+    {
+        return startDate;
+    }
+
+    public String getEndDate()
+    {
+        return endDate;
     }
 
     public int getImage()

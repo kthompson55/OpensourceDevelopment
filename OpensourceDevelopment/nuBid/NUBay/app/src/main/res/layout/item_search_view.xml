@@ -3,30 +3,30 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_height="40dp"
-        android:layout_width="40dp"
-        android:id="@+id/searchItemImage"
-        />
-    
-    <TextView
-        android:layout_width="150dp"
-        android:layout_height="25dp"
-        android:id="@+id/searchItemName"
-        android:text="text"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:padding="6dp">
 
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="25dp"
-        android:id="@+id/searchItemPrice"
-        />
+        <ImageView
+            android:layout_height="40dp"
+            android:layout_width="40dp"
+            android:id="@+id/searchItemImage"
+            />
 
-    <Button
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:text="BID"
-        android:id="@+id/searchItemBtn"
-        />
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="25dp"
+            android:id="@+id/searchItemName"
+            android:text="text"
+            />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="25dp"
+            android:id="@+id/searchItemPrice"
+            />
+
+    </LinearLayout>
 
 </Views.SearchItemView>

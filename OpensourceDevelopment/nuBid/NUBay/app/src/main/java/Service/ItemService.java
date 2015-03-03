@@ -7,7 +7,10 @@ import com.example.kthompson.nubay.R;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
@@ -24,21 +27,42 @@ public class ItemService {
         return serviceInstance;
     }
 
-    private List<Item> items;
-    private Context context;
+    private Map<Long, Item> items;
+    private long keyCount;
 
     private ItemService()
     {
-        items = new ArrayList<Item>();
-        items.add(new Item("Penguin","A fancy bird for fancy occasions", R.drawable.emporerpenguin));
-        items.add(new Item("Smash Ball","Unlock your full potential!", R.drawable.smashball));
-        items.add(new Item("Falcon Punch","A refreshing beverage to quench your thirst", R.drawable.falconpunch));
-        items.add(new Item("Trap","Don't say you weren't warned",R.drawable.trap));
+        keyCount = 0;
+        items = new HashMap<>();
+        items.put(keyCount,new Item("Bad Item", "Invalid Item is Invalid",new BigDecimal(5.00),"01/15/2015","03/15/2015",R.drawable.broken));
+        keyCount++;
+        items.put(keyCount,new Item("Penguin","A fancy bird for fancy occasions",new BigDecimal(5.00),"01/15/2015", "03/15/2015", R.drawable.emporerpenguin));
+        keyCount++;
+        items.put(keyCount,new Item("Smash Ball","Unlock your full potential!",new BigDecimal(5.00),"01/15/2015", "03/15/2015", R.drawable.smashball));
+        keyCount++;
+        items.put(keyCount,new Item("Falcon Punch","A refreshing beverage to quench your thirst",new BigDecimal(5.00),"01/15/2015", "03/15/2015", R.drawable.falconpunch));
+        keyCount++;
+        items.put(keyCount,new Item("Trap","Don't say you weren't warned",new BigDecimal(5.00),"01/15/2015", "03/15/2015",R.drawable.trap));
+        keyCount++;
     }
 
-    public List<Item> getItems()
+    public Iterator<Item> getItems()
     {
-        return items;
+        return items.values().iterator();
+    }
+
+    public Item getItemByName(String name)
+    {
+        Iterator<Item> i = getItems();
+        while(i.hasNext())
+        {
+            Item next = i.next();
+            if(next.getName().equals(name))
+            {
+                return next;
+            }
+        }
+        return null;
     }
 
     public List<Item> search(String query)
@@ -76,7 +100,7 @@ public class ItemService {
         andBlocks.add(output.poll() + ",");
 
         // Sue me.
-        for(Item i : items)
+        for(Item i : items.values())
         {
             boolean addedOnce = false;
             for(String terms : andBlocks)
@@ -100,20 +124,24 @@ public class ItemService {
 
     public Item bid(long id, BigDecimal bidIncrease)
     {
-        Item returnItem = findItem(id);
-        returnItem.increaseBid(bidIncrease);
-        return returnItem;
+        items.get(id).setPrice(items.get(id).increaseBid(bidIncrease));
+        return items.get(id);
+    }
+
+    public void addItem(Item newItem)
+    {
+        items.put(keyCount,newItem);
+        newItem.setId(keyCount);
+        keyCount++;
     }
 
     public Item findItem(long id)
     {
-        for(Item i : items)
+        Item ret = null;
+        if(items.keySet().contains(id))
         {
-            if(i.getId() == id)
-            {
-                return i;
-            }
+            ret = items.get(id);
         }
-        return null;
+        return ret;
     }
 }

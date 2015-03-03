@@ -3,43 +3,61 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="170dp"
-        android:layout_height="20dp"
-        android:id="@+id/bidItemName"
-        android:text="ITEM NAME"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:id="@+id/bidItemName"
+            android:text="ITEM NAME"
+            android:adjustViewBounds="true"/>
 
-    <ImageView
-        android:layout_width="260dp"
-        android:layout_height="260dp"
-        android:id="@+id/bidItemImage"
-        />
-    
-    <TextView
-        android:layout_width="280dp"
-        android:layout_height="20dp"
-        android:id="@+id/bidItemDescription"
-        android:text="ITEM DESCRIPTION"/>
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/bidItemImage"
+            android:adjustViewBounds="true"
+            android:layout_gravity="right|top" />
 
-    <TextView
-        android:layout_margin="0dp"
-        android:layout_width="90dp"
-        android:layout_height="20dp"
-        android:id="@+id/bidPriceLabel"
-        android:text="Item Price"/>
+        <TextView
+            android:layout_width="280dp"
+            android:layout_height="80dp"
+            android:id="@+id/bidItemDescription"
+            android:text="ITEM DESCRIPTION"
+            android:adjustViewBounds="true"
+            android:layout_gravity="left|center_vertical" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bid"
-        android:width="150dp"
-        android:id="@+id/bidButton"
-        android:layout_marginBottom="51dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="211dp"
+            android:layout_gravity="right|bottom">
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bid"
+                android:width="150dp"
+                android:id="@+id/bidButton"
+                android:layout_marginBottom="51dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal|bottom"
+                android:adjustViewBounds="true"/>
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="20dp"
+                android:id="@+id/bidPriceLabel"
+                android:text="Item Price"
+                android:adjustViewBounds="true"
+                android:layout_gravity="left|top" />
+        </FrameLayout>
+    </FrameLayout>
 />
 
 </Views.ItemBidView>

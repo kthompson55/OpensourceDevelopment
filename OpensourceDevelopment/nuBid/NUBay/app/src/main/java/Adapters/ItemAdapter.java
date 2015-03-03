@@ -62,12 +62,10 @@ public class ItemAdapter extends BaseAdapter
                 ImageView img = (ImageView) v.findViewById(R.id.searchItemImage); // Not the right view at the time of this being called [SearchView doesn't contain searchItemImage
                 TextView name = (TextView) v.findViewById(R.id.searchItemName);
                 TextView price = (TextView) v.findViewById(R.id.searchItemPrice);
-                Button btn = (Button) v.findViewById(R.id.searchItemBtn);
 
                 img.setImageResource(p.getImage());
                 name.setText(p.getName());
                 price.setText("$" + p.getPrice());
-                btn.setText("BID");
             }
         }
         return v;

@@ -2,6 +2,7 @@ package Views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,7 +35,6 @@ public class SearchItemView extends LinearLayout
         itemImage = (ImageView)findViewById(R.id.searchItemImage);
         itemName = (TextView)findViewById(R.id.searchItemName);
         itemPrice = (TextView)findViewById(R.id.searchItemPrice);
-        itemBid = (Button)findViewById(R.id.searchItemBtn); // <--- How do I call this so it updates the item?
     }
 
     public void updateInfo(Item i)
@@ -42,6 +42,5 @@ public class SearchItemView extends LinearLayout
         itemImage.setImageResource(i.getImage());
         itemName.setText(i.getName());
         itemPrice.setText("$" + i.getPrice());
-        itemBid.setEnabled(false);
     }
 }

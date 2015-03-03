@@ -6,11 +6,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.kthompson.nubay.R;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import Interfaces.ViewListener;
 import Models.Item;
@@ -28,10 +31,9 @@ public class ItemBidView extends LinearLayout
     private TextView bidItemPriceLabel;
     private ImageView bidItemImage;
 
-    public ItemBidView(Context context, AttributeSet attrs, Item item)
+    public ItemBidView(Context context, AttributeSet attrs)
     {
         super(context,attrs);
-        bidItem = item;
     }
 
     private ViewListener listener;
@@ -54,18 +56,31 @@ public class ItemBidView extends LinearLayout
             @Override
             public void onClick(View v)
             {
-                listener.onPress();
+                listener.onPagePress(bidItem.getName(),bidItem.getDescription(),bidItem.getPrice().toString(),bidItem.getStartDate(),bidItem.getEndDate());
             }
         });
-        bidItemName.setText(bidItem.getName());
+        /*bidItemName.setText(bidItem.getName());
         bidItemDescription.setText(bidItem.getDescription());
         bidItemPriceLabel.setText("Item Price: " + bidItem.getPrice());
+        bidItemImage.setImageResource(bidItem.getImage());*/
+    }
+
+    public void setItem(long id)
+    {
+        DecimalFormat fmt = new DecimalFormat("#0.00");
+        bidItem = ItemService.getInstance().findItem(id);
+        String thing = fmt.format(bidItem.getPrice());
+        bidItemName.setText(bidItem.getName());
+        bidItemDescription.setText(bidItem.getDescription());
+        bidItemPriceLabel.setText("Item Price: $" + thing);
         bidItemImage.setImageResource(bidItem.getImage());
     }
 
     public void incrementBid(BigDecimal increment)
     {
         bidItem = ItemService.getInstance().bid(bidItem.getId(),increment);
-        bidItemPriceLabel.setText("Item Price: " + bidItem.getPrice());
+        DecimalFormat fmt = new DecimalFormat("#0.00");
+        String thing = fmt.format(bidItem.getPrice());
+        bidItemPriceLabel.setText("Item Price: $" + thing);
     }
 }

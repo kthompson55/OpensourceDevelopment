@@ -27,6 +27,7 @@ public class SearchView extends LinearLayout
     TextView searchBar;
     ListView itemResults;
     Button searchButton;
+    Button createButton;
     private ViewListener listener;
 
     public SearchView(Context context, AttributeSet attrs)
@@ -41,21 +42,27 @@ public class SearchView extends LinearLayout
         searchBar = (TextView)findViewById(R.id.searchBar);
         itemResults = (ListView)findViewById(R.id.itemList);
         searchButton = (Button)findViewById(R.id.queryButton);
+        createButton = (Button)findViewById(R.id.createItemButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onPress();
+                listener.onSearchPress();
             }
         });
-
+        createButton.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                listener.onTransferPress(-1);
+            }
+        });
         itemResults.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                ItemService.getInstance().bid(id,new BigDecimal(5));
-                Item newItem = ItemService.getInstance().findItem(id);
-                ((SearchItemView)view).updateInfo(newItem);
+                listener.onTransferPress(id);
             }
         });
     }
@@ -73,10 +80,5 @@ public class SearchView extends LinearLayout
     public void displayItems(ItemAdapter adapter)
     {
         itemResults.setAdapter(adapter);
-    }
-
-    public ListView getListView()
-    {
-        return itemResults;
     }
 }

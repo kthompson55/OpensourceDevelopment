@@ -3,23 +3,48 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:editable="true"
-        android:id="@+id/searchBar"
-        android:focusableInTouchMode="true"
-        />
-    
-    <Button
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        android:text="Search"
-        android:id="@+id/queryButton"/>
+    <FrameLayout
+        android:layout_height="80dp"
+        android:layout_width="match_parent">
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:editable="true"
+            android:id="@+id/searchBar"
+            android:text="Search..."
+            android:textSize="15sp"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:focusableInTouchMode="true"
+            />
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="Search"
+            android:id="@+id/queryButton"
+            android:layout_margin="10dp"
+            android:layout_gravity="right|top" />
+
+    </FrameLayout>
     
     <ListView
-        android:layout_width="300dp"
-        android:layout_height="700dp"
+        android:layout_width="match_parent"
+        android:layout_height="440dp"
         android:id="@+id/itemList"></ListView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="Add Item"
+            android:layout_gravity="center"
+            android:id="@+id/createItemButton"/>
+
+    </FrameLayout>
     
 </Views.SearchView><!-- From: file:/C:/Users/kthompson/Desktop/Homework/Java%201/Repository/OpensourceDevelopment/nuBid/NUBay/app/src/main/res/layout/search_view.xml -->
