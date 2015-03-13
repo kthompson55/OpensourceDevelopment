@@ -80,7 +80,8 @@ public class CreateActivity extends Activity
             }
             catch(ItemServiceException e)
             {
-                
+                view.resetPrice();
+                view.resetDates();
             }
         }
 
