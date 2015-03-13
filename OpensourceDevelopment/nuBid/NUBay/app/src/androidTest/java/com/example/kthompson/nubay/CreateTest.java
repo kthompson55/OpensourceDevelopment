@@ -3,6 +3,7 @@ package com.example.kthompson.nubay;
 import android.test.ActivityTestCase;
 
 import Exceptions.ItemBuildException;
+import Exceptions.ItemServiceException;
 import Models.Item;
 import Service.ItemBuilder;
 import Service.ItemService;
@@ -57,7 +58,14 @@ public class CreateTest extends ActivityTestCase
         try
         {
             newItem = ItemBuilder.createItem("Test Item", "Test Desc", "$3.50", "05.01.2015", "02.03.2016");
-            ItemService.getInstance().addItem(newItem);
+            try
+            {
+                ItemService.getInstance().addItem(newItem);
+            }
+            catch(ItemServiceException e)
+            {
+                e.printStackTrace();
+            }
         }
         catch(ItemBuildException e)
         {

@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 public interface ViewListener
 {
     public void onTransferPress(long itemID);
-    public void onPagePress(String itemName, String itemDesc, String startPrice, String startDate, String endDate);
+    public void onDeletePress(long itemID);
+    public void onPagePress(long id, String itemName, String itemDesc, String startPrice, String startDate, String endDate, boolean isEdit);
     public void onSearchPress();
 }

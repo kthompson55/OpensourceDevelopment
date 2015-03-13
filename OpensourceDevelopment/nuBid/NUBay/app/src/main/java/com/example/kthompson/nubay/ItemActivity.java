@@ -34,7 +34,13 @@ public class ItemActivity extends Activity
         }
 
         @Override
-        public void onPagePress(String itemName, String itemDesc, String startPrice, String startDate, String endDate)
+        public void onDeletePress(long itemID)
+        {
+
+        }
+
+        @Override
+        public void onPagePress(long id, String itemName, String itemDesc, String startPrice, String startDate, String endDate, boolean isEdit)
         {
             view.incrementBid(new BigDecimal(.5));
         }

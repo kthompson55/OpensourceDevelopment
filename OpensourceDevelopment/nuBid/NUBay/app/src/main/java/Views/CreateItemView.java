@@ -26,6 +26,7 @@ public class CreateItemView extends LinearLayout
     private TextView startDate;
     private TextView endDate;
     private Button returnBtn;
+    private boolean edit;
     private ViewListener listener;
 
     public CreateItemView(Context context, AttributeSet attrs)
@@ -54,13 +55,25 @@ public class CreateItemView extends LinearLayout
             @Override
             public void onClick(View v) {
                 listener.onPagePress(
+                        ItemService.getInstance().findItemId(itemName.getText().toString()),
                         itemName.getText().toString(),
                         itemDesc.getText().toString(),
                         startPrice.getText().toString(),
                         startDate.getText().toString(),
-                        endDate.getText().toString());
+                        endDate.getText().toString(),
+                        edit);
             }
         });
+    }
+
+    public void determinePageTitle(boolean isEdit)
+    {
+        edit = isEdit;
+        if(isEdit)
+        {
+            TextView temp = (TextView)findViewById(R.id.titleBar);
+            temp.setText("Update Item");
+        }
     }
 
     public void resetPrice()

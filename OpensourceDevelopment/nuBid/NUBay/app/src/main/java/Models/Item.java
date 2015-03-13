@@ -4,6 +4,8 @@ import android.media.Image;
 
 import java.math.BigDecimal;
 
+import Service.ItemService;
+
 /**
  * Created by kthompson on 1/23/2015.
  */
@@ -18,9 +20,9 @@ public class Item
     private String endDate;
     private int imageResourceId;
 
-    public Item(String name, String description, BigDecimal sPrice, String sDate, String eDate, int imgID)
+    public Item(long setID, String name, String description, BigDecimal sPrice, String sDate, String eDate, int imgID)
     {
-        id = id_counter++;
+        id = setID;
         itemBidPrice = new BigDecimal(0);
         itemName = name;
         itemDescription = description;

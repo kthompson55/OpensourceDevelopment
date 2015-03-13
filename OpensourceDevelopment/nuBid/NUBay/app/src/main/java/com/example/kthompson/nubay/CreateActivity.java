@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 import Exceptions.ItemBuildException;
 import Exceptions.ItemDateException;
 import Exceptions.ItemPriceException;
+import Exceptions.ItemServiceException;
 import Interfaces.ViewListener;
 import Models.CreateItemModel;
 import Models.Item;
@@ -28,6 +29,7 @@ public class CreateActivity extends Activity
 {
     private CreateItemView view;
     private Context con;
+    private boolean isEdit;
 
     private ViewListener listener = new ViewListener()
     {
@@ -39,13 +41,28 @@ public class CreateActivity extends Activity
         }
 
         @Override
-        public void onPagePress(String itemName, String itemDesc, String startPrice, String startDate, String endDate)
+        public void onDeletePress(long itemID)
+        {
+
+        }
+
+        @Override
+        public void onPagePress(long id, String itemName, String itemDesc, String startPrice, String startDate, String endDate, boolean isEdit)
         {
             try
             {
                 Item newItem = ItemBuilder.createItem(itemName, itemDesc, startPrice, startDate, endDate);
-                ItemService.getInstance().addItem(newItem);
-                Intent i = new Intent(con,SearchActivity.class);
+                if(isEdit)
+                {
+                    ItemService.getInstance().addItem(newItem);
+                }
+                else
+                {
+                    newItem.setId(id);
+                    ItemService.getInstance().updateItem(newItem);
+                }
+                Intent i = new Intent(con, ItemActivity.class);
+                i.putExtra("itemID",newItem.getId());
                 startActivity(i);
             }
             catch(ItemDateException e)
@@ -61,6 +78,10 @@ public class CreateActivity extends Activity
                 view.resetDates();
                 view.resetPrice();
             }
+            catch(ItemServiceException e)
+            {
+                
+            }
         }
 
         @Override
@@ -74,10 +95,12 @@ public class CreateActivity extends Activity
     {
         super.onCreate(savedInstanceState);
 
-        con = this;
+        isEdit = getIntent().getBooleanExtra("isEdit",false);
 
+        con = this;
         view = (CreateItemView) View.inflate(this,R.layout.create_item_view,null);
         view.setViewListener(listener);
+        view.determinePageTitle(isEdit);
 
         setContentView(view);
     }

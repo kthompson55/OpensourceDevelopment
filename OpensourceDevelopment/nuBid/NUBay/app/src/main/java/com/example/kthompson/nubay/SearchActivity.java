@@ -11,6 +11,7 @@ import android.view.View;
 import java.math.BigDecimal;
 
 import Adapters.ItemAdapter;
+import Exceptions.ItemServiceException;
 import Interfaces.ViewListener;
 import Service.ItemService;
 import Views.ItemBidView;
@@ -36,7 +37,7 @@ public class SearchActivity extends Activity
         }
 
         @Override
-        public void onPagePress(String itemName, String itemDesc, String startPrice, String startDate, String endDate)
+        public void onPagePress(long id, String itemName, String itemDesc, String startPrice, String startDate, String endDate, boolean isEdit)
         {
 
         }
@@ -52,7 +53,51 @@ public class SearchActivity extends Activity
             else
             {
                 Intent i = new Intent(con, CreateActivity.class);
+                i.putExtra("isEdit",false);
                 startActivity(i);
+            }
+        }
+
+        @Override
+        public void onDeletePress(long itemID) {
+
+        }
+    };
+
+    private ViewListener searchItemListener = new ViewListener()
+    {
+        @Override
+        public void onSearchPress()
+        {
+
+        }
+
+        @Override
+        public void onPagePress(long id, String itemName, String itemDesc, String startPrice, String startDate, String endDate, boolean isEdit)
+        {
+
+        }
+
+        @Override
+        public void onTransferPress(long itemID)
+        {
+            Intent i = new Intent(con, CreateActivity.class);
+            i.putExtra("isEdit", true);
+            i.putExtra("itemId",itemID);
+            startActivity(i);
+        }
+
+        @Override
+        public void onDeletePress(long itemID)
+        {
+            try
+            {
+                ItemService.getInstance().deleteItem(itemID);
+                ItemAdapter adapter = createAdapter("");
+                view.displayItems(adapter);
+            }
+            catch (ItemServiceException e)
+            {
             }
         }
     };
@@ -94,6 +139,6 @@ public class SearchActivity extends Activity
 
     private ItemAdapter createAdapter(String query)
     {
-        return new ItemAdapter(this,ItemService.getInstance().search(query));
+        return new ItemAdapter(this,ItemService.getInstance().search(query),searchItemListener);
     }
 }

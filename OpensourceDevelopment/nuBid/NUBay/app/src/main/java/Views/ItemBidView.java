@@ -56,7 +56,7 @@ public class ItemBidView extends LinearLayout
             @Override
             public void onClick(View v)
             {
-                listener.onPagePress(bidItem.getName(),bidItem.getDescription(),bidItem.getPrice().toString(),bidItem.getStartDate(),bidItem.getEndDate());
+                listener.onPagePress(bidItem.getId(),bidItem.getName(),bidItem.getDescription(),bidItem.getPrice().toString(),bidItem.getStartDate(),bidItem.getEndDate(),false);
             }
         });
         /*bidItemName.setText(bidItem.getName());

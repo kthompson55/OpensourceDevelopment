@@ -25,17 +25,24 @@ public class ItemBuilder
     private static final Pattern myDate = Pattern.compile("[\\s](\\d)[\\.\\-\\/](\\d{4})");
     private static final Pattern wordDate = Pattern.compile("([A-z]+)\\s(\\d+)\\,? ?(\\d{4})");
 
+    private static Date storedStart;
+    private static Date storedEnd;
+
     public static Item createItem(String itemName, String itemDesc, String startPrice, String startDate, String endDate) throws ItemBuildException
     {
         Item i = null;
 
         BigDecimal price = testPrice(startPrice);
-        String sDate = testDate(startDate);
-        String eDate = testDate(endDate);
+        String sDate = testDate(startDate,true);
+        String eDate = testDate(endDate,false);
 
         if(price != null && sDate != null && eDate != null)
         {
-            i = new Item(itemName, itemDesc, price, sDate, eDate, R.drawable.smashball);
+            if(storedStart.before(storedEnd))
+            {
+                i = new Item(ItemService.getInstance().getID(), itemName, itemDesc, price, sDate, eDate, R.drawable.nubay);
+            }
+            else throw new ItemBuildException("End Date is before Start Date");
         }
         else
         {
@@ -70,7 +77,8 @@ public class ItemBuilder
             if(m.matches())
             {
                 dollars = m.group(1);
-                cents = m.group(2);
+                if(m.group(2) != null) cents = m.group(2);
+                else cents = "00";
 
                 StringBuilder sb = new StringBuilder();
                 sb.append(dollars).append(".").append(cents);
@@ -87,7 +95,7 @@ public class ItemBuilder
         return ret;
     }
 
-    private static String testDate(String date) throws ItemDateException
+    private static String testDate(String date, boolean isStart) throws ItemDateException
     {
         String ret = null;
 
@@ -116,6 +124,14 @@ public class ItemBuilder
                 formatter = new SimpleDateFormat("MMM d, yyyy");
                 d = formatter.parse(dateBuilder.toString());
                 ret = d.toString();
+                if(isStart)
+                {
+                    storedStart = d;
+                }
+                else
+                {
+                    storedEnd = d;
+                }
             }
             catch(ParseException e)
             {
@@ -159,6 +175,14 @@ public class ItemBuilder
             {
                 d = formatter.parse(dateBuilder.toString());
                 ret = d.toString();
+                if(isStart)
+                {
+                    storedStart = d;
+                }
+                else
+                {
+                    storedEnd = d;
+                }
             }
             catch(ParseException e)
             {
@@ -173,6 +197,14 @@ public class ItemBuilder
             {
                 d = formatter.parse(dateBuilder.toString());
                 ret = d.toString();
+                if(isStart)
+                {
+                    storedStart = d;
+                }
+                else
+                {
+                    storedEnd = d;
+                }
             }
             catch(ParseException e)
             {
