@@ -1,0 +1,27 @@
+package headers;
+
+public enum Header 
+{
+	DATE_ERROR
+	{
+		
+	},
+	PRICE_ERROR
+	{
+		
+	},
+	DATE_AND_PRICE_ERROR
+	{
+		
+	},
+	ITEM_SERVICE_ERROR
+	{
+		
+	},
+	OKAY
+	{
+		
+	}
+	
+	public abstract String getHeader();
+}

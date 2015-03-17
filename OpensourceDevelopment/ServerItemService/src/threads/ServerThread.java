@@ -1,5 +1,8 @@
 package threads;
 
+import headers.Header;
+import items.ItemBuilder;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,6 +11,9 @@ import java.math.BigDecimal;
 import java.net.Socket;
 import java.util.List;
 
+import exceptions.ItemBuildException;
+import exceptions.ItemDateException;
+import exceptions.ItemPriceException;
 import exceptions.ItemServiceException;
 import models.Item;
 import service.ItemService;
@@ -31,32 +37,98 @@ public class ServerThread implements Runnable
 		Item newItem = null;
 		PrintWriter socketWriter = new PrintWriter(s.getOutputStream(),true);
 		StringBuilder sb = new StringBuilder();
+		Header h;
 		switch(components[0].charAt(0))
 		{
 		case 'c': // create item
-			newItem = new Item(service.getId(),components[2],components[3],new BigDecimal(Double.parseDouble(components[4])),
-					components[5],components[6],Integer.parseInt(components[7]));
-			service.addItem(newItem);
-			break;
-		case 'u': // update item
 			newItem = new Item(Long.parseLong(components[1]),components[2],components[3],new BigDecimal(Double.parseDouble(components[4])),
 					components[5],components[6],Integer.parseInt(components[7]));
-			service.updateItem(newItem);
-			sb = new StringBuilder();
-			sb.append(newItem.getId()).append("|");
-			sb.append(newItem.getName()).append("|");
-			sb.append(newItem.getDescription()).append("|");
-			sb.append(newItem.getPrice()).append("|");
-			sb.append(newItem.getStartDate()).append("|");
-			sb.append(newItem.getEndDate()).append("|");
-			sb.append(newItem.getImage());
-			socketWriter.println(sb.toString());
+			service.addItem(newItem);
+			h = Header.OKAY;
+			socketWriter.println(h.getHeader());
+			socketWriter.println(h.getNumElements(0));
+			break;
+		case 'u': // update item
+			try
+			{
+				newItem = ItemBuilder.createItem(Long.parseLong(components[1]),components[2], components[3], components[4], components[5], components[6], 0);
+			}
+			catch(ItemDateException e)
+			{
+				h = Header.DATE_ERROR;
+			}
+			catch(ItemPriceException e)
+			{
+				h = Header.PRICE_ERROR;
+			}
+			catch(ItemBuildException e)
+			{
+				h = Header.DATE_AND_PRICE_ERROR;
+			}
+			if(newItem != null)
+			{
+				if(newItem.getId() < service.getCount())
+				{
+					try
+					{
+						service.updateItem(newItem);
+						h = Header.OKAY;
+						socketWriter.println(h.getHeader());
+						socketWriter.println(h.getNumElements(1));
+					}
+					catch(ItemServiceException e)
+					{
+						h = Header.ITEM_SERVICE_ERROR;
+						socketWriter.println(h.getHeader());
+						socketWriter.println(h.getNumElements(0));
+					}
+				}
+				else
+				{
+					h = Header.ITEM_SERVICE_ERROR;
+					socketWriter.println(h.getHeader());
+					socketWriter.println(h.getNumElements(0));
+				}
+			}
+			else
+			{
+				h = Header.ITEM_SERVICE_ERROR;
+				socketWriter.println(h.getHeader());
+				socketWriter.println(h.getNumElements(0));
+			}
+			if(h == Header.OKAY)
+			{
+				sb = new StringBuilder();
+				sb.append(newItem.getId()).append("|");
+				sb.append(newItem.getName()).append("|");
+				sb.append(newItem.getDescription()).append("|");
+				sb.append(newItem.getPrice()).append("|");
+				sb.append(newItem.getStartDate()).append("|");
+				sb.append(newItem.getEndDate()).append("|");
+				sb.append(newItem.getImage());
+				
+				socketWriter.println(sb.toString());
+			}
 			break;
 		case 'd': // delete item
-			service.deleteItem(Long.parseLong(components[1]));
+			try
+			{
+				service.deleteItem(Long.parseLong(components[1]));
+			}
+			catch(ItemServiceException e)
+			{
+				
+			}
+			h = Header.OKAY;
+			socketWriter.println(h.getHeader());
+			socketWriter.println(h.getNumElements(0));
 			break;
 		case 's': // search with query
 			List<Item> results = service.search(components[1]);
+			h = Header.OKAY;
+			socketWriter.println(h.getHeader());
+			socketWriter.println(h.getNumElements(results.size()));
+			//String secondLine = "";
 			for(Item i : results)
 			{
 				sb = new StringBuilder();
@@ -67,34 +139,98 @@ public class ServerThread implements Runnable
 				sb.append(i.getStartDate()).append("|");
 				sb.append(i.getEndDate()).append("|");
 				sb.append(i.getImage()).append("\n");
-				socketWriter.println(sb.toString());
+				String secondLine = sb.toString();
+				socketWriter.println(secondLine);
 			}
+			//socketWriter.println("");//secondLine);
 			break;
 		case 'f': // find item by id
-			Item ret = service.findItem(Long.parseLong(components[1]));
-			sb = new StringBuilder();
-			sb.append(ret.getId()).append("|");
-			sb.append(ret.getName()).append("|");
-			sb.append(ret.getDescription()).append("|");
-			sb.append(ret.getPrice()).append("|");
-			sb.append(ret.getStartDate()).append("|");
-			sb.append(ret.getEndDate()).append("|");
-			sb.append(ret.getImage());
-			socketWriter.println(sb.toString());
+			Long desiredID = Long.parseLong(components[1]);
+			Item ret = null;
+			if(desiredID < service.getCount())
+			{
+				ret = service.findItem(desiredID);
+				h = Header.OKAY;
+				
+				sb = new StringBuilder();
+				sb.append(ret.getId()).append("|");
+				sb.append(ret.getName()).append("|");
+				sb.append(ret.getDescription()).append("|");
+				sb.append(ret.getPrice()).append("|");
+				sb.append(ret.getStartDate()).append("|");
+				sb.append(ret.getEndDate()).append("|");
+				sb.append(ret.getImage());
+				socketWriter.println(h.getHeader());
+				socketWriter.println(h.getNumElements(1));
+				socketWriter.println(sb.toString());
+			}
+			else
+			{
+				h = Header.ITEM_SERVICE_ERROR;
+				socketWriter.println(h.getHeader());
+				socketWriter.println(h.getNumElements(0));
+			}
 			break;
 		case 'n': // find id by name
 			long id = service.findItemId(components[1]);
+			if(id == -1)
+			{
+				h = Header.ITEM_SERVICE_ERROR;
+			}
+			else
+			{
+				h = Header.OKAY;
+			}
+			socketWriter.println(h.getHeader());
+			socketWriter.println(h.getNumElements(1));
 			socketWriter.println(id+"");
 			break;
 		case 'i': // get next id value
 			long newId = service.getId();
+			h = Header.OKAY;
+			socketWriter.println(h.getHeader());
+			socketWriter.println(h.getNumElements(1));
 			socketWriter.println(newId+"");
 			break;
-		case 'z': // clear items
-			service.clear();
+		case 'b': // build item
+			try
+			{
+				newItem = service.buildItem(Long.parseLong(components[1]), components[2], components[3], components[4], components[5], components[6], 0);
+				h = Header.OKAY;
+			}
+			catch(ItemDateException e)
+			{
+				h = Header.DATE_ERROR;
+			}
+			catch(ItemPriceException e)
+			{
+				h = Header.PRICE_ERROR;
+			}
+			catch(ItemBuildException e)
+			{
+				h = Header.DATE_AND_PRICE_ERROR;
+			}
+			socketWriter.println(h.getHeader());
+			if(h == Header.OKAY)
+			{
+				sb = new StringBuilder();
+				sb.append(newItem.getId()).append("|");
+				sb.append(newItem.getName()).append("|");
+				sb.append(newItem.getDescription()).append("|");
+				sb.append(newItem.getPrice()).append("|");
+				sb.append(newItem.getStartDate()).append("|");
+				sb.append(newItem.getEndDate()).append("|");
+				sb.append(newItem.getImage());
+				
+				socketWriter.println(h.getNumElements(1));
+				socketWriter.println(sb.toString());
+			}
+			else
+			{
+				socketWriter.println(h.getNumElements(0));
+			}
 			break;
-		}
-		socketWriter.println("300");
+		}		
 	}
 	
 	@Override

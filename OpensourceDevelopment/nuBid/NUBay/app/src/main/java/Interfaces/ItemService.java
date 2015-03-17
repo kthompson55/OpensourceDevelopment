@@ -3,6 +3,7 @@ package Interfaces;
 import java.math.BigDecimal;
 import java.util.List;
 
+import Exceptions.ItemBuildException;
 import Exceptions.ItemServiceException;
 import Models.Item;
 
@@ -15,6 +16,7 @@ public interface ItemService
     public long getId();
 	public Item bid(long id, BigDecimal bidIncrease) throws ItemServiceException;
 	public Item findItem(long id);
-    public long findItemId(String name);
+    public Long findItemId(String name);
     public void clear();
+    public Item buildItem(long id, String name, String desc, String price, String sDate, String eDate, int imageID) throws ItemBuildException;
 }

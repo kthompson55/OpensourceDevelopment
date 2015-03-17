@@ -1,0 +1,78 @@
+package headers;
+
+public enum Header 
+{
+	DATE_ERROR
+	{
+		@Override
+		public String getHeader() 
+		{
+			return "401";
+		}
+
+		@Override
+		public String getNumElements(int numElements) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	},
+	PRICE_ERROR
+	{
+		@Override
+		public String getHeader() 
+		{
+			return "402";
+		}
+
+		@Override
+		public String getNumElements(int numElements) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	},
+	DATE_AND_PRICE_ERROR
+	{
+		@Override
+		public String getHeader() 
+		{
+			return "403";
+		}
+
+		@Override
+		public String getNumElements(int numElements) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	},
+	ITEM_SERVICE_ERROR
+	{
+		@Override
+		public String getHeader() 
+		{
+			return "404";
+		}
+
+		@Override
+		public String getNumElements(int numElements) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	},
+	OKAY
+	{
+		@Override
+		public String getHeader() 
+		{
+			return "300";
+		}
+
+		@Override
+		public String getNumElements(int numElements) 
+		{
+			return numElements + "";
+		}
+	};
+	
+	public abstract String getHeader();
+	public abstract String getNumElements(int numElements);
+}

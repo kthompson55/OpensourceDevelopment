@@ -1,0 +1,47 @@
+package headers;
+
+public enum Header 
+{
+	DATE_ERROR
+	{
+		@Override
+		public String getHeader(int numElements) 
+		{
+			return "401\n0\n";
+		}
+	},
+	PRICE_ERROR
+	{
+		@Override
+		public String getHeader(int numElements) 
+		{
+			return "402\n0\n";
+		}
+	},
+	DATE_AND_PRICE_ERROR
+	{
+		@Override
+		public String getHeader(int numElements) 
+		{
+			return "403\n0\n";
+		}
+	},
+	ITEM_SERVICE_ERROR
+	{
+		@Override
+		public String getHeader(int numElements) 
+		{
+			return "404\n0\n";
+		}
+	},
+	OKAY
+	{
+		@Override
+		public String getHeader(int numElements) 
+		{
+			return "300\n" + numElements + "\n";
+		}
+	};
+	
+	public abstract String getHeader(int numElements);
+}

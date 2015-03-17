@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import Exceptions.ItemBuildException;
 import Exceptions.ItemServiceException;
 import Models.Item;
-import Service.ItemBuilder;
 import Service.ClientItemService;
 
 /**
@@ -32,7 +31,8 @@ public class PersistenceTest extends ActivityTestCase
     {
         try
         {
-            Item invalidItem = ItemBuilder.createItem("Invalid", "Invalid item", "0", "05/08/2015", "04/01/2015");
+            Item invalidItem = ClientItemService.getInstance().buildItem(ClientItemService.getInstance().getId(),"Invalid", "Invalid item", "0", "05/08/2015", "04/01/2015",0);
+            if(invalidItem == null) throw new ItemBuildException("pass");
             ClientItemService.getInstance().addItem(invalidItem);
             fail("Invalid item was added");
         }
@@ -46,28 +46,8 @@ public class PersistenceTest extends ActivityTestCase
         }
     }
 
-    private void generateDummyState()
-    {
-        clearState();
-        try
-        {
-            ClientItemService.getInstance().addItem(new Item(ClientItemService.getInstance().getId(), "Penguin", "A dapper bird", new BigDecimal(350), "07/05/2015", "08/23/2016", R.drawable.emporerpenguin));
-            ClientItemService.getInstance().addItem(new Item(ClientItemService.getInstance().getId(), "Falcon Punch", "A refreshing beverage for your face", new BigDecimal(3.50),"01/01/1000","12/25/3500",R.drawable.falconpunch));
-        }
-        catch(ItemServiceException e)
-        {
-
-        }
-    }
-
-    private void clearState()
-    {
-        ClientItemService.getInstance().clear();
-    }
-
     public void testDeleteValidItem()
     {
-        generateDummyState();
         try
         {
             ClientItemService.getInstance().deleteItem(0);
@@ -80,10 +60,9 @@ public class PersistenceTest extends ActivityTestCase
 
     public void testDeleteInvalidItem()
     {
-        generateDummyState();
         try
         {
-            ClientItemService.getInstance().deleteItem(3);
+            ClientItemService.getInstance().deleteItem(100000);
         }
         catch(ItemServiceException e)
         {
@@ -93,11 +72,11 @@ public class PersistenceTest extends ActivityTestCase
 
     public void testUpdateValidItem()
     {
-        generateDummyState();
         try
         {
-            Item queueItem = ClientItemService.getInstance().findItem(0);
-            Item updateItem = ItemBuilder.createItem(queueItem.getName(),queueItem.getDescription(), queueItem.getPrice().toString(), queueItem.getStartDate(),queueItem.getEndDate());
+            Item queueItem = ClientItemService.getInstance().findItem(1);
+            Item updateItem = ClientItemService.getInstance().buildItem(1,queueItem.getName(),queueItem.getDescription(),
+                    queueItem.getPrice().toString(), "11.11.1111","12.12.1212",0);
             updateItem.setId(queueItem.getId());
 
             ClientItemService.getInstance().updateItem(updateItem);
@@ -114,12 +93,13 @@ public class PersistenceTest extends ActivityTestCase
 
     public void testUpdateInvalidItem()
     {
-        generateDummyState();
         try
         {
-            Item queueItem = ClientItemService.getInstance().findItem(0);
-            Item updateItem = ItemBuilder.createItem(queueItem.getName(),queueItem.getDescription(), queueItem.getPrice().toString(), queueItem.getStartDate(),queueItem.getEndDate());
-            updateItem.setId(3);
+            Item queueItem = ClientItemService.getInstance().findItem(1);
+            Item updateItem = ClientItemService.getInstance().buildItem(ClientItemService.getInstance().getId(),queueItem.getName(),queueItem.getDescription(),
+                    queueItem.getPrice().toString(), "11.11.1111","12.12.1212",0);
+            if(updateItem == null) throw new ItemBuildException("pass");
+            updateItem.setId(8);
 
             ClientItemService.getInstance().updateItem(updateItem);
         }

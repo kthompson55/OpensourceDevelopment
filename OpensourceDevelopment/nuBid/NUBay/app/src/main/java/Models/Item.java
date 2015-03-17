@@ -81,4 +81,22 @@ public class Item
     {
         return imageResourceId;
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        boolean ret = false;
+        if(o.getClass().equals(Item.class))
+        {
+            Item i = (Item)o;
+            ret = id == i.getId();
+        }
+        return ret;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return itemName.hashCode();
+    }
 }

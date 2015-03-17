@@ -9,7 +9,6 @@
 <fullyQualifiedTypeName name="threads.ServerThread"/>
 <fullyQualifiedTypeName name="models.Item"/>
 <fullyQualifiedTypeName name="java.math.BigDecimal"/>
-<fullyQualifiedTypeName name="service.ServerItemService"/>
 <fullyQualifiedTypeName name="service.ItemService"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="java.io.BufferedReader"/>
@@ -26,4 +25,10 @@
 <fullyQualifiedTypeName name="java.util.PriorityQueue"/>
 <fullyQualifiedTypeName name="java.io.PrintWriter"/>
 <fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="service.ServerItemService"/>
+<fullyQualifiedTypeName name="exceptions.ItemDateException"/>
+<fullyQualifiedTypeName name="exceptions.ItemPriceException"/>
+<fullyQualifiedTypeName name="items.ItemBuilder"/>
+<fullyQualifiedTypeName name="exceptions.ItemBuildException"/>
+<fullyQualifiedTypeName name="headers.Header"/>
 </qualifiedTypeNameHistroy>

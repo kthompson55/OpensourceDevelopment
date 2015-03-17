@@ -5,7 +5,6 @@ import android.test.ActivityTestCase;
 import Exceptions.ItemBuildException;
 import Exceptions.ItemServiceException;
 import Models.Item;
-import Service.ItemBuilder;
 import Service.ClientItemService;
 
 /**
@@ -13,24 +12,13 @@ import Service.ClientItemService;
  */
 public class CreateTest extends ActivityTestCase
 {
-    public void testValidItem()
-    {
-        try
-        {
-            Item newItem = ItemBuilder.createItem("Test Item", "Test Desc", "$3.50", "05.01.2015", "02.03.2016");
-        }
-        catch(ItemBuildException e)
-        {
-            fail("Real item was not created");
-        }
-    }
-
     public void testInvalidDate()
     {
         try
         {
             // 15 becomes March of the next year. seriously.
-            Item newItem = ItemBuilder.createItem("Test Item", "Test Desc", "$3.50", "15.02.1023", "02.03.2016");
+            Item newItem = ClientItemService.getInstance().buildItem(ClientItemService.getInstance().getId(),"Test Item", "Test Desc", "$3.50", "15.02.1023", "02.03.2016",0);
+            if(newItem == null) throw new ItemBuildException("Pass");
             fail("Bad item date was created");
         }
         catch(ItemBuildException e)
@@ -43,7 +31,8 @@ public class CreateTest extends ActivityTestCase
     {
         try
         {
-            Item newItem = ItemBuilder.createItem("Test Item", "Test Desc", "$3s.7a", "05.01.2015", "02.03.2016");
+            Item newItem = ClientItemService.getInstance().buildItem(ClientItemService.getInstance().getId(), "Test Item", "Test Desc", "$3s.7a", "05.01.2015", "02.03.2016", 0);
+            if(newItem == null) throw new ItemBuildException("Pass");
             fail("Bad item price was created");
         }
         catch(ItemBuildException e)
@@ -57,7 +46,7 @@ public class CreateTest extends ActivityTestCase
         Item newItem = null;
         try
         {
-            newItem = ItemBuilder.createItem("Test Item", "Test Desc", "$3.50", "05.01.2015", "02.03.2016");
+            newItem = ClientItemService.getInstance().buildItem(ClientItemService.getInstance().getId(),"addToItemService", "Test Desc", "$3.50", "05.01.2015", "02.03.2016",0);
             try
             {
                 ClientItemService.getInstance().addItem(newItem);

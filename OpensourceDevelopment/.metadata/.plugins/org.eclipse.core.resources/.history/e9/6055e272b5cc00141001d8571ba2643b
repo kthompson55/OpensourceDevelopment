@@ -1,0 +1,47 @@
+package headers;
+
+public enum Header 
+{
+	DATE_ERROR
+	{
+		@Override
+		public String getHeader() 
+		{
+			return "401\n0\n";
+		}
+	},
+	PRICE_ERROR
+	{
+		@Override
+		public String getHeader() 
+		{
+			return "402\n0\n";
+		}
+	},
+	DATE_AND_PRICE_ERROR
+	{
+		@Override
+		public String getHeader() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	},
+	ITEM_SERVICE_ERROR
+	{
+		@Override
+		public String getHeader() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	},
+	OKAY
+	{
+		@Override
+		public String getHeader() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	};
+	
+	public abstract String getHeader();
+}

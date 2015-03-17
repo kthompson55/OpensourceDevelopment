@@ -1,5 +1,7 @@
 package service;
 
+import items.ItemBuilder;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,6 +21,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 import models.Item;
+import exceptions.ItemBuildException;
 import exceptions.ItemServiceException;
 
 public class ServerItemService implements ItemService 
@@ -85,6 +88,7 @@ public class ServerItemService implements ItemService
 					}
 				}
 			}
+			System.out.println(keyCount);
 		} 
 		catch (FileNotFoundException e) 
 		{
@@ -111,6 +115,7 @@ public class ServerItemService implements ItemService
         sb.append("c|").append(newItem.getId()).append("|").append(newItem.getName()).append("|").append(newItem.getDescription()).append("|").append(fmt.format(newItem.getPrice())).append("|");
         sb.append(newItem.getStartDate()).append("|").append(newItem.getEndDate()).append("|").append(newItem.getImage());
         writer.println(sb.toString());
+        
 	}
 
 	@Override
@@ -161,7 +166,7 @@ public class ServerItemService implements ItemService
                 String andStatement = output.poll() + ",";
                 if(!operators.empty())
                 {
-                    while (operators.peek().equals("and"))
+                    while (operators.peek().toLowerCase().equals("and"))
                     {
                         operators.pop();
                         andStatement += output.poll() + ",";
@@ -201,7 +206,14 @@ public class ServerItemService implements ItemService
 	@Override
 	public long getId()
 	{
+		System.out.println(keyCount);
 		return keyCount++;
+	}
+	
+	@Override
+	public long getCount()
+	{
+		return keyCount;
 	}
 
 	@Override
@@ -222,7 +234,13 @@ public class ServerItemService implements ItemService
         return ret;
 	}
 	
-	public long findItemId(String itemName)
+	public Item buildItem(long id, String name, String desc, String price, String sDate, String eDate, int imageID) throws ItemBuildException
+	{
+		Item ret = ItemBuilder.createItem(id, name, desc, price, sDate, eDate, imageID);
+		return ret;
+	}
+	
+	public Long findItemId(String itemName)
     {
         long ret = -1;
         for(Item i : items.values())
@@ -235,9 +253,4 @@ public class ServerItemService implements ItemService
         }
         return ret;
     }
-	
-	public void clear()
-	{
-		items.clear();
-	}
 }

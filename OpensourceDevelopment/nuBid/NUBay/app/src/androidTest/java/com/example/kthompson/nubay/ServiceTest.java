@@ -6,80 +6,114 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import Exceptions.ItemServiceException;
+import Interfaces.ItemService;
 import Models.Item;
 import Service.ClientItemService;
 
 public class ServiceTest extends ActivityTestCase
 {
-    private void generateDummyState()
-    {
-        clearDummyState();
-        try
-        {
-            ClientItemService.getInstance().addItem(new Item(ClientItemService.getInstance().getId(), "Penguin", "A dapper bird", new BigDecimal(350), "07/05/2015", "08/23/2016", R.drawable.emporerpenguin));
-            ClientItemService.getInstance().addItem(new Item(ClientItemService.getInstance().getId(), "Falcon Punch", "A refreshing beverage for your face", new BigDecimal(3.50),"01/01/1000","12/25/3500",R.drawable.falconpunch));
-        }
-        catch(ItemServiceException e)
-        {
+    private boolean stateGenerated = false;
 
-        }
-    }
-
-    private void clearDummyState()
+    private void generateState()
     {
-        ClientItemService.getInstance().clear();
+        Long fPunchIn = ClientItemService.getInstance().findItemId("Falcon Punch");
+        Long penguinIn = ClientItemService.getInstance().findItemId("Penguin");
+        boolean noItems = fPunchIn == null && penguinIn == null;
+        if(noItems)
+        {
+            try
+            {
+                ClientItemService.getInstance().addItem(new Item(ClientItemService.getInstance().getId(), "Falcon Punch", "A refreshing beverage for your face", new BigDecimal(3.5),
+                        "11/11/1111", "12/12/1212", R.drawable.falconpunch));
+                ClientItemService.getInstance().addItem(new Item(ClientItemService.getInstance().getId(), "Penguin", "A dapper bird for dapper occasions", new BigDecimal(375),
+                        "11/11/1111", "12/12/1212", R.drawable.emporerpenguin));
+            }
+            catch(ItemServiceException e)
+            {
+                e.printStackTrace();
+            }
+            stateGenerated = true;
+        }
     }
 
     public void testSingleQuerySearch()
     {
-        generateDummyState();
-        Item fPunch = ClientItemService.getInstance().findItem(1);
+        generateState();
+        Item fPunch = ClientItemService.getInstance().findItem(ClientItemService.getInstance().findItemId("Falcon Punch"));
         List<Item> items = ClientItemService.getInstance().search("Falcon");
         assert(items.contains(fPunch));
-        clearDummyState();
     }
 
     public void testAndQuerySearch()
     {
-        generateDummyState();
-        Item fPunch = ClientItemService.getInstance().findItem(1);
+        System.out.println("AAAAAAAAAAAAAAAAAAAAA");
+        generateState();
+        Long id = ClientItemService.getInstance().findItemId("Falcon Punch");
+        System.out.println("AAAAAAAAAAAAAAAAAAAAA" + id);
+        if(id == null)
+        {
+            fail("No punch");
+        }
+        Item fPunch = ClientItemService.getInstance().findItem(id);
+        System.out.println("AAAAAAAAAAAAAAAAAAAAA" + fPunch.getName());
         List<Item> items = ClientItemService.getInstance().search("Falcon AND Punch");
-        assert(items.contains(fPunch));
-        clearDummyState();
+        System.out.println("AAAAAAAAAAAAAAAAAAAAA TEST" + items.size());
+        boolean contains = false;
+        System.out.println(items.size());
+        System.out.println(fPunch.getId());
+        for(Item i : items)
+        {
+            if(i.equals(fPunch))
+            {
+                contains = true;
+
+            }
+        }
+        assertEquals(true,contains);
     }
 
     public void testOrQuerySearch()
     {
-        generateDummyState();
-        Item fPunch = ClientItemService.getInstance().findItem(1);
-        Item penguin = ClientItemService.getInstance().findItem(0);
+        generateState();
+        Long fID = ClientItemService.getInstance().findItemId("Falcon Punch");
+        Long pID = ClientItemService.getInstance().findItemId("Penguin");
+        if(fID == null || pID == null)
+        {
+            fail("Null IDs");
+        }
+        Item fPunch = ClientItemService.getInstance().findItem(fID);
+        Item penguin = ClientItemService.getInstance().findItem(pID);
         List<Item> items = ClientItemService.getInstance().search("Falcon OR Penguin");
-        assertEquals(2,items.size());
-        boolean fPunchIn = items.get(0).getName().equals(fPunch.getName()) || items.get(1).getName().equals(fPunch.getName());
-        boolean penguinIn = items.get(0).getName().equals(penguin.getName()) || items.get(1).getName().equals(penguin.getName());
-        assert(fPunchIn && penguinIn);
-        clearDummyState();
+        boolean fPunchIn = items.contains(fPunch);
+        boolean penguinIn = items.contains(penguin);
+        assertEquals(true,fPunchIn);
+        assertEquals(true,penguinIn);
     }
 
     public void testOrAndAndQuerySearch()
     {
-        generateDummyState();
-        Item fPunch = ClientItemService.getInstance().findItem(1);
-        Item penguin = ClientItemService.getInstance().findItem(0);
+        generateState();
+        Long fPunchID = ClientItemService.getInstance().findItemId("Falcon Punch");
+        Long penguinID = ClientItemService.getInstance().findItemId("Penguin");
+        if(fPunchID == null || penguinID == null)
+        {
+            fail("Null IDs");
+        }
+        Item fPunch = ClientItemService.getInstance().findItem(fPunchID);
+        Item penguin = ClientItemService.getInstance().findItem(penguinID);
         List<Item> items = ClientItemService.getInstance().search("Falcon AND Punch OR Penguin");
-        assertEquals(2,items.size());
-        boolean fPunchIn = items.get(0).getName().equals(fPunch.getName()) || items.get(1).getName().equals(fPunch.getName());
-        boolean penguinIn = items.get(0).getName().equals(penguin.getName()) || items.get(1).getName().equals(penguin.getName());
+
+        boolean fPunchIn = items.contains(fPunch);
+        boolean penguinIn = items.contains(penguin);
         assert(fPunchIn && penguinIn);
-        clearDummyState();
     }
 
     public void testBid()
     {
-        generateDummyState();
+        generateState();
         try
         {
-            Item fPunch = ClientItemService.getInstance().findItem(1);
+            Item fPunch = ClientItemService.getInstance().findItem(ClientItemService.getInstance().findItemId("Falcon Punch"));
             BigDecimal beforeBid = fPunch.getPrice();
             fPunch = ClientItemService.getInstance().bid(fPunch.getId(), new BigDecimal(5));
             assert (beforeBid.compareTo(fPunch.getPrice()) < 0);
@@ -88,6 +122,5 @@ public class ServiceTest extends ActivityTestCase
         {
             fail("Bid failed");
         }
-        clearDummyState();
     }
 }

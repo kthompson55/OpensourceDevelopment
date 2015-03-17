@@ -8,3 +8,12 @@ u|1|Test|A simple item test|37.00|Thu Jan 01 00:00:00 MST 2015|Thu Dec 31 00:00:
 u|1|Test|A simple item test|37.00|Thu Jan 01 00:00:00 MST 2015|Thu Dec 31 00:00:00 MST 2015|2130837559
 d|0
 c|2|Sample|Item|1.50|Sat Nov 11 00:00:00 MST 1111|Wed Dec 12 00:00:00 MDT 1212|2130837559
+c|3|Falcon Punch|A refreshing beverage for your face|3.50|11/11/1111|12/12/1212|2130837557
+c|4|Penguin|A dapper bird for dapper occasions|375.00|11/11/1111|12/12/1212|2130837556
+u|3|Falcon Punch|A refreshing beverage for your face|3.50|Sat Nov 11 00:00:00 MST 1111|Wed Dec 12 00:00:00 MST 1212|0
+c|5|Falcon Punch|A refreshing beverage for your face|3.50|11/11/1111|12/12/1212|2130837557
+c|6|Penguin|A dapper bird for dapper occasions|375.00|11/11/1111|12/12/1212|2130837556
+c|7|addToItemService|Test Desc|3.50|Fri May 01 00:00:00 MDT 2015|Wed Feb 03 00:00:00 MST 2016|0
+c|11|Valid|An item that is valid|0.00|05/08/2015|07/12/2015|2130837559
+d|100000
+d|0

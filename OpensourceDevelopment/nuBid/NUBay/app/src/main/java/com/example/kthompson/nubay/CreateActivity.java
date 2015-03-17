@@ -4,21 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.View;
-
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.util.regex.Pattern;
 
 import Exceptions.ItemBuildException;
 import Exceptions.ItemDateException;
 import Exceptions.ItemPriceException;
 import Exceptions.ItemServiceException;
 import Interfaces.ViewListener;
-import Models.CreateItemModel;
 import Models.Item;
-import Service.ItemBuilder;
 import Service.ClientItemService;
 import Views.CreateItemView;
 
@@ -51,7 +44,7 @@ public class CreateActivity extends Activity
         {
             try
             {
-                Item newItem = ItemBuilder.createItem(itemName, itemDesc, startPrice, startDate, endDate);
+                Item newItem = ClientItemService.getInstance().buildItem(id,itemName,itemDesc,startPrice,startDate,endDate,0);
                 if(!isEdit)
                 {
                     ClientItemService.getInstance().addItem(newItem);

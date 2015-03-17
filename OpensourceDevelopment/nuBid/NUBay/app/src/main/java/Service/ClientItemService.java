@@ -1,41 +1,14 @@
 package Service;
 
-import android.app.Activity;
-import android.app.Service;
-import android.content.Context;
-import android.content.res.Resources;
-
-import com.example.kthompson.nubay.R;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.net.Socket;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Stack;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+import Exceptions.ItemBuildException;
 import Exceptions.ItemServiceException;
 import Interfaces.ItemService;
 import Models.Item;
 import threads.ServiceTask;
-import threads.ServiceThread;
 
 /**
  * Created by kthompson on 1/26/2015.
@@ -119,7 +92,7 @@ public class ClientItemService implements ItemService
         ServiceTask t = new ServiceTask();
         t.createRequest(sb.toString());
         t.execute();
-        return t.getNextId();
+        return t.retrieveID();
     }
 
     public Item bid(long id, BigDecimal bidIncrease) throws ItemServiceException
@@ -140,7 +113,7 @@ public class ClientItemService implements ItemService
         return t.retrieveItem();
     }
 
-    public long findItemId(String itemName)
+    public Long findItemId(String itemName)
     {
         StringBuilder sb = new StringBuilder();
         sb.append("n|").append(itemName);
@@ -159,5 +132,23 @@ public class ClientItemService implements ItemService
         ServiceTask t = new ServiceTask();
         t.createRequest(sb.toString());
         t.execute();
+    }
+
+    @Override
+    public Item buildItem(long id, String name, String desc, String price, String sDate, String eDate, int imageID) throws ItemBuildException
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append("b|").append(id).append("|");
+        sb.append(name).append("|");
+        sb.append(desc).append("|");
+        sb.append(price).append("|");
+        sb.append(sDate).append("|");
+        sb.append(eDate).append("|");
+        sb.append(imageID);
+
+        ServiceTask t = new ServiceTask();
+        t.createRequest(sb.toString());
+        t.execute();
+        return t.retrieveItem();
     }
 }
