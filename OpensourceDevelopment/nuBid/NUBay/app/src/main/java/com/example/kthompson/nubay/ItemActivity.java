@@ -10,8 +10,10 @@ import android.view.View;
 
 import java.math.BigDecimal;
 
+import Exceptions.ItemServiceException;
 import Interfaces.ViewListener;
-import Service.ItemService;
+import Models.Item;
+import Service.ClientItemService;
 import Views.CreateItemView;
 import Views.ItemBidView;
 
@@ -42,7 +44,17 @@ public class ItemActivity extends Activity
         @Override
         public void onPagePress(long id, String itemName, String itemDesc, String startPrice, String startDate, String endDate, boolean isEdit)
         {
-            view.incrementBid(new BigDecimal(.5));
+            try
+            {
+                double newPrice = Double.parseDouble(startPrice) + .5;
+                Item newItem = new Item(id,itemName,itemDesc,new BigDecimal(newPrice),startDate,endDate,R.drawable.nubay);
+                ClientItemService.getInstance().updateItem(newItem);
+                view.incrementBid(new BigDecimal(.5));
+            }
+            catch(ItemServiceException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         @Override

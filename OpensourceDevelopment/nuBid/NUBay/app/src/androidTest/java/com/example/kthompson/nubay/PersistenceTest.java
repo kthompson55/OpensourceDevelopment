@@ -8,7 +8,7 @@ import Exceptions.ItemBuildException;
 import Exceptions.ItemServiceException;
 import Models.Item;
 import Service.ItemBuilder;
-import Service.ItemService;
+import Service.ClientItemService;
 
 /**
  * Created by kthompson on 3/12/2015.
@@ -17,10 +17,10 @@ public class PersistenceTest extends ActivityTestCase
 {
     public void testAddValidItem()
     {
-        Item validItem = new Item(ItemService.getInstance().getID(),"Valid","An item that is valid",new BigDecimal(0),"05/08/2015","07/12/2015",R.drawable.nubay);
+        Item validItem = new Item(ClientItemService.getInstance().getId(),"Valid","An item that is valid",new BigDecimal(0),"05/08/2015","07/12/2015",R.drawable.nubay);
         try
         {
-            ItemService.getInstance().addItem(validItem);
+            ClientItemService.getInstance().addItem(validItem);
         }
         catch (ItemServiceException e)
         {
@@ -33,7 +33,7 @@ public class PersistenceTest extends ActivityTestCase
         try
         {
             Item invalidItem = ItemBuilder.createItem("Invalid", "Invalid item", "0", "05/08/2015", "04/01/2015");
-            ItemService.getInstance().addItem(invalidItem);
+            ClientItemService.getInstance().addItem(invalidItem);
             fail("Invalid item was added");
         }
         catch(ItemBuildException e)
@@ -48,11 +48,11 @@ public class PersistenceTest extends ActivityTestCase
 
     private void generateDummyState()
     {
-        clearDummyState();
+        clearState();
         try
         {
-            ItemService.getInstance().addItem(new Item(ItemService.getInstance().getID(), "Penguin", "A dapper bird", new BigDecimal(350), "07/05/2015", "08/23/2016", R.drawable.emporerpenguin));
-            ItemService.getInstance().addItem(new Item(ItemService.getInstance().getID(), "Falcon Punch", "A refreshing beverage for your face", new BigDecimal(3.50),"01/01/1000","12/25/3500",R.drawable.falconpunch));
+            ClientItemService.getInstance().addItem(new Item(ClientItemService.getInstance().getId(), "Penguin", "A dapper bird", new BigDecimal(350), "07/05/2015", "08/23/2016", R.drawable.emporerpenguin));
+            ClientItemService.getInstance().addItem(new Item(ClientItemService.getInstance().getId(), "Falcon Punch", "A refreshing beverage for your face", new BigDecimal(3.50),"01/01/1000","12/25/3500",R.drawable.falconpunch));
         }
         catch(ItemServiceException e)
         {
@@ -60,9 +60,9 @@ public class PersistenceTest extends ActivityTestCase
         }
     }
 
-    private void clearDummyState()
+    private void clearState()
     {
-        ItemService.getInstance().clear();
+        ClientItemService.getInstance().clear();
     }
 
     public void testDeleteValidItem()
@@ -70,7 +70,7 @@ public class PersistenceTest extends ActivityTestCase
         generateDummyState();
         try
         {
-            ItemService.getInstance().deleteItem(0);
+            ClientItemService.getInstance().deleteItem(0);
         }
         catch(ItemServiceException e)
         {
@@ -83,7 +83,7 @@ public class PersistenceTest extends ActivityTestCase
         generateDummyState();
         try
         {
-            ItemService.getInstance().deleteItem(3);
+            ClientItemService.getInstance().deleteItem(3);
         }
         catch(ItemServiceException e)
         {
@@ -96,11 +96,11 @@ public class PersistenceTest extends ActivityTestCase
         generateDummyState();
         try
         {
-            Item queueItem = ItemService.getInstance().findItem(0);
+            Item queueItem = ClientItemService.getInstance().findItem(0);
             Item updateItem = ItemBuilder.createItem(queueItem.getName(),queueItem.getDescription(), queueItem.getPrice().toString(), queueItem.getStartDate(),queueItem.getEndDate());
             updateItem.setId(queueItem.getId());
 
-            ItemService.getInstance().updateItem(updateItem);
+            ClientItemService.getInstance().updateItem(updateItem);
         }
         catch(ItemServiceException e)
         {
@@ -117,11 +117,11 @@ public class PersistenceTest extends ActivityTestCase
         generateDummyState();
         try
         {
-            Item queueItem = ItemService.getInstance().findItem(0);
+            Item queueItem = ClientItemService.getInstance().findItem(0);
             Item updateItem = ItemBuilder.createItem(queueItem.getName(),queueItem.getDescription(), queueItem.getPrice().toString(), queueItem.getStartDate(),queueItem.getEndDate());
             updateItem.setId(3);
 
-            ItemService.getInstance().updateItem(updateItem);
+            ClientItemService.getInstance().updateItem(updateItem);
         }
         catch(ItemServiceException e)
         {

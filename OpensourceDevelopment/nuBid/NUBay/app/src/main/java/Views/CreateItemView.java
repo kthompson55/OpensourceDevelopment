@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 
 import Interfaces.ViewListener;
 import Models.Item;
-import Service.ItemService;
+import Service.ClientItemService;
 
 /**
  * Created by kthompson on 2/3/2015.
@@ -50,20 +50,40 @@ public class CreateItemView extends LinearLayout
         startDate = (TextView)findViewById(R.id.createItemStartDate);
         endDate = (TextView) findViewById(R.id.createItemEndDate);
         returnBtn = (Button) findViewById(R.id.createItemBtn);
-        returnBtn.setOnClickListener(new View.OnClickListener()
+        if(edit) {
+            returnBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onPagePress(
+                            ClientItemService.getInstance().findItemId(itemName.getText().toString()),
+                            itemName.getText().toString(),
+                            itemDesc.getText().toString(),
+                            startPrice.getText().toString(),
+                            startDate.getText().toString(),
+                            endDate.getText().toString(),
+                            true);
+                }
+            });
+        }
+        else
         {
-            @Override
-            public void onClick(View v) {
-                listener.onPagePress(
-                        ItemService.getInstance().findItemId(itemName.getText().toString()),
-                        itemName.getText().toString(),
-                        itemDesc.getText().toString(),
-                        startPrice.getText().toString(),
-                        startDate.getText().toString(),
-                        endDate.getText().toString(),
-                        edit);
-            }
-        });
+            returnBtn.setOnClickListener(new OnClickListener()
+            {
+                @Override
+            public void onClick(View v)
+                {
+                    listener.onPagePress(
+                            0,
+                            itemName.getText().toString(),
+                            itemDesc.getText().toString(),
+                            startPrice.getText().toString(),
+                            startDate.getText().toString(),
+                            endDate.getText().toString(),
+                            false
+                    );
+                }
+            });
+        }
     }
 
     public void determinePageTitle(boolean isEdit)

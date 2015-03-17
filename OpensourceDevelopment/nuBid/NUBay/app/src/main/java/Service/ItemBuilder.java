@@ -40,7 +40,7 @@ public class ItemBuilder
         {
             if(storedStart.before(storedEnd))
             {
-                i = new Item(ItemService.getInstance().getID(), itemName, itemDesc, price, sDate, eDate, R.drawable.nubay);
+                i = new Item(ClientItemService.getInstance().getId(), itemName, itemDesc, price, sDate, eDate, R.drawable.nubay);
             }
             else throw new ItemBuildException("End Date is before Start Date");
         }

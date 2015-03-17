@@ -1,0 +1,10 @@
+c|0|Item Name|Item Description|0.01|Sat Nov 11 00:00:00 MST 1111|Wed Dec 12 00:00:00 MDT 1212|2130837559
+c|1|Test|A simple item test|35.50|Thu Jan 01 00:00:00 MST 2015|Thu Dec 31 00:00:00 MST 2015|2130837559
+u|1|Test|A simple item test|36.00|Thu Jan 01 00:00:00 MST 2015|Thu Dec 31 00:00:00 MST 2015|2130837559
+u|1|Test|A simple item test|36.00|Thu Jan 01 00:00:00 MST 2015|Thu Dec 31 00:00:00 MST 2015|2130837559
+u|1|Test|A simple item test|36.50|Thu Jan 01 00:00:00 MST 2015|Thu Dec 31 00:00:00 MST 2015|2130837559
+u|1|Test|A simple item test|36.50|Thu Jan 01 00:00:00 MST 2015|Thu Dec 31 00:00:00 MST 2015|2130837559
+u|1|Test|A simple item test|37.00|Thu Jan 01 00:00:00 MST 2015|Thu Dec 31 00:00:00 MST 2015|2130837559
+u|1|Test|A simple item test|37.00|Thu Jan 01 00:00:00 MST 2015|Thu Dec 31 00:00:00 MST 2015|2130837559
+d|0
+c|2|Sample|Item|1.50|Sat Nov 11 00:00:00 MST 1111|Wed Dec 12 00:00:00 MDT 1212|2130837559

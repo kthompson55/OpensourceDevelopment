@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import Adapters.ItemAdapter;
 import Exceptions.ItemServiceException;
 import Interfaces.ViewListener;
-import Service.ItemService;
+import Service.ClientItemService;
 import Views.ItemBidView;
 import Views.SearchView;
 
@@ -92,7 +92,7 @@ public class SearchActivity extends Activity
         {
             try
             {
-                ItemService.getInstance().deleteItem(itemID);
+                ClientItemService.getInstance().deleteItem(itemID);
                 ItemAdapter adapter = createAdapter("");
                 view.displayItems(adapter);
             }
@@ -139,6 +139,6 @@ public class SearchActivity extends Activity
 
     private ItemAdapter createAdapter(String query)
     {
-        return new ItemAdapter(this,ItemService.getInstance().search(query),searchItemListener);
+        return new ItemAdapter(this,ClientItemService.getInstance().search(query),searchItemListener);
     }
 }

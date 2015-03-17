@@ -19,7 +19,7 @@ import Interfaces.ViewListener;
 import Models.CreateItemModel;
 import Models.Item;
 import Service.ItemBuilder;
-import Service.ItemService;
+import Service.ClientItemService;
 import Views.CreateItemView;
 
 /**
@@ -52,14 +52,14 @@ public class CreateActivity extends Activity
             try
             {
                 Item newItem = ItemBuilder.createItem(itemName, itemDesc, startPrice, startDate, endDate);
-                if(isEdit)
+                if(!isEdit)
                 {
-                    ItemService.getInstance().addItem(newItem);
+                    ClientItemService.getInstance().addItem(newItem);
                 }
                 else
                 {
                     newItem.setId(id);
-                    ItemService.getInstance().updateItem(newItem);
+                    ClientItemService.getInstance().updateItem(newItem);
                 }
                 Intent i = new Intent(con, ItemActivity.class);
                 i.putExtra("itemID",newItem.getId());

@@ -6,7 +6,7 @@ import Exceptions.ItemBuildException;
 import Exceptions.ItemServiceException;
 import Models.Item;
 import Service.ItemBuilder;
-import Service.ItemService;
+import Service.ClientItemService;
 
 /**
  * Created by kthompson on 2/24/2015.
@@ -60,7 +60,7 @@ public class CreateTest extends ActivityTestCase
             newItem = ItemBuilder.createItem("Test Item", "Test Desc", "$3.50", "05.01.2015", "02.03.2016");
             try
             {
-                ItemService.getInstance().addItem(newItem);
+                ClientItemService.getInstance().addItem(newItem);
             }
             catch(ItemServiceException e)
             {
@@ -71,6 +71,6 @@ public class CreateTest extends ActivityTestCase
         {
             fail("Item addition failed");
         }
-        assertEquals(newItem,ItemService.getInstance().findItem(newItem.getId()));
+        assertEquals(newItem,ClientItemService.getInstance().findItem(newItem.getId()));
     }
 }

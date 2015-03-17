@@ -4,7 +4,7 @@ import android.media.Image;
 
 import java.math.BigDecimal;
 
-import Service.ItemService;
+import Service.ClientItemService;
 
 /**
  * Created by kthompson on 1/23/2015.

@@ -17,7 +17,7 @@ import java.util.List;
 import Adapters.ItemAdapter;
 import Interfaces.ViewListener;
 import Models.Item;
-import Service.ItemService;
+import Service.ClientItemService;
 
 /**
  * Created by kthompson on 1/23/2015.

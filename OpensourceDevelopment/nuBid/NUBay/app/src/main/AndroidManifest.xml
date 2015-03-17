@@ -4,6 +4,7 @@
 
     <permission android:name="com.example.kthompson.nubay"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"

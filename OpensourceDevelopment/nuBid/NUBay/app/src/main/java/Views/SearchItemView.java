@@ -13,7 +13,7 @@ import com.example.kthompson.nubay.R;
 import Exceptions.ItemServiceException;
 import Interfaces.ViewListener;
 import Models.Item;
-import Service.ItemService;
+import Service.ClientItemService;
 
 /**
  * Created by kthompson on 1/26/2015.
@@ -46,14 +46,14 @@ public class SearchItemView extends LinearLayout
             @Override
             public void onClick(View v)
             {
-                listener.onTransferPress(ItemService.getInstance().findItemId(itemName.getText().toString()));
+                listener.onTransferPress(ClientItemService.getInstance().findItemId(itemName.getText().toString()));
             }
         });
        deleteItem.setOnClickListener(new OnClickListener() {
            @Override
            public void onClick(View v)
            {
-               listener.onDeletePress(ItemService.getInstance().findItemId(itemName.getText().toString()));
+               listener.onDeletePress(ClientItemService.getInstance().findItemId(itemName.getText().toString()));
            }
        });
     }

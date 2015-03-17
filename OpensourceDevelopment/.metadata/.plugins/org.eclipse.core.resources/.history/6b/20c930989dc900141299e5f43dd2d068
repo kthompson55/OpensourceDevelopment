@@ -1,0 +1,6 @@
+package server;
+
+public interface ItemService 
+{
+	public void addItem(Item newItem) throws ItemServiceException;
+}

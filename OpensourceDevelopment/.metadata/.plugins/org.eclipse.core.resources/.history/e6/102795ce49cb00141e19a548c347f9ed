@@ -1,0 +1,17 @@
+package server;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import exceptions.ItemServiceException;
+import models.Item;
+
+public interface ItemService 
+{
+	public void addItem(Item newItem) throws ItemServiceException;
+	public void updateItem(Item newItem) throws ItemServiceException;
+	public void deleteItem(long id) throws ItemServiceException;
+	public List<Item> search(String query);
+	public Item bid(long id, BigDecimal bidIncrease);
+	public Item findItem(long id);
+}

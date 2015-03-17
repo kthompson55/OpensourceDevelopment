@@ -1,0 +1,30 @@
+package server;
+
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class ItemServer {
+
+	public static void main(String[] args) 
+	{
+		ExecutorService service = Executors.newFixedThreadPool(100);
+		try(ServerSocket ss = new ServerSocket(8080))
+		{
+			
+			while(true)
+			{
+				try
+				{
+					Socket s = ss.accept();
+					if(s.isConnected())
+					{
+						service.execute(new ServerThread(s));
+					}
+				}
+			}
+		}
+	}
+
+}

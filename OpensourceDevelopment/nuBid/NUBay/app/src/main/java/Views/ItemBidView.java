@@ -15,9 +15,10 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import Exceptions.ItemServiceException;
 import Interfaces.ViewListener;
 import Models.Item;
-import Service.ItemService;
+import Service.ClientItemService;
 
 /**
  * Created by kthompson on 1/23/2015.
@@ -68,7 +69,7 @@ public class ItemBidView extends LinearLayout
     public void setItem(long id)
     {
         DecimalFormat fmt = new DecimalFormat("#0.00");
-        bidItem = ItemService.getInstance().findItem(id);
+        bidItem = ClientItemService.getInstance().findItem(id);
         String thing = fmt.format(bidItem.getPrice());
         bidItemName.setText(bidItem.getName());
         bidItemDescription.setText(bidItem.getDescription());
@@ -76,9 +77,9 @@ public class ItemBidView extends LinearLayout
         bidItemImage.setImageResource(bidItem.getImage());
     }
 
-    public void incrementBid(BigDecimal increment)
+    public void incrementBid(BigDecimal increment) throws ItemServiceException
     {
-        bidItem = ItemService.getInstance().bid(bidItem.getId(),increment);
+        bidItem = ClientItemService.getInstance().bid(bidItem.getId(),increment);
         DecimalFormat fmt = new DecimalFormat("#0.00");
         String thing = fmt.format(bidItem.getPrice());
         bidItemPriceLabel.setText("Item Price: $" + thing);

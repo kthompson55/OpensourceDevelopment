@@ -1,0 +1,117 @@
+package threads;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.net.Socket;
+import java.util.List;
+
+import exceptions.ItemServiceException;
+import models.Item;
+import service.ItemService;
+
+public class ServerThread implements Runnable 
+{
+	private Socket s;
+	private ItemService service;
+	
+	public ServerThread(Socket socket, ItemService itemService)
+	{
+		s = socket;
+		service = itemService;
+	}
+	
+	private void ReceiveMessage(BufferedReader reader) throws IOException, ItemServiceException
+	{
+		String line = reader.readLine();
+		System.out.println(line);
+		String[] components = line.split("\\|");
+		Item newItem = null;
+		PrintWriter socketWriter = new PrintWriter(s.getOutputStream(),true);
+		StringBuilder sb = new StringBuilder();
+		switch(components[0].charAt(0))
+		{
+		case 'c': // create item
+			newItem = new Item(service.getId(),components[2],components[3],new BigDecimal(Double.parseDouble(components[4])),
+					components[5],components[6],Integer.parseInt(components[7]));
+			service.addItem(newItem);
+			break;
+		case 'u': // update item
+			newItem = new Item(Long.parseLong(components[1]),components[2],components[3],new BigDecimal(Double.parseDouble(components[4])),
+					components[5],components[6],Integer.parseInt(components[7]));
+			service.updateItem(newItem);
+			sb = new StringBuilder();
+			sb.append(newItem.getId()).append("|");
+			sb.append(newItem.getName()).append("|");
+			sb.append(newItem.getDescription()).append("|");
+			sb.append(newItem.getPrice()).append("|");
+			sb.append(newItem.getStartDate()).append("|");
+			sb.append(newItem.getEndDate()).append("|");
+			sb.append(newItem.getImage());
+			socketWriter.println(sb.toString());
+			break;
+		case 'd': // delete item
+			service.deleteItem(Long.parseLong(components[1]));
+			break;
+		case 's': // search with query
+			List<Item> results = service.search(components[1]);
+			for(Item i : results)
+			{
+				sb = new StringBuilder();
+				sb.append(i.getId()).append("|");
+				sb.append(i.getName()).append("|");
+				sb.append(i.getDescription()).append("|");
+				sb.append(i.getPrice()).append("|");
+				sb.append(i.getStartDate()).append("|");
+				sb.append(i.getEndDate()).append("|");
+				sb.append(i.getImage()).append("\n");
+				socketWriter.println(sb.toString());
+			}
+			break;
+		case 'f': // find item by id
+			Item ret = service.findItem(Long.parseLong(components[1]));
+			sb = new StringBuilder();
+			sb.append(ret.getId()).append("|");
+			sb.append(ret.getName()).append("|");
+			sb.append(ret.getDescription()).append("|");
+			sb.append(ret.getPrice()).append("|");
+			sb.append(ret.getStartDate()).append("|");
+			sb.append(ret.getEndDate()).append("|");
+			sb.append(ret.getImage());
+			socketWriter.println(sb.toString());
+			break;
+		case 'n': // find id by name
+			long id = service.findItemId(components[1]);
+			socketWriter.println(id+"");
+			break;
+		case 'i': // get next id value
+			long newId = service.getId();
+			socketWriter.println(newId+"");
+			break;
+		case 'z':
+			
+			break;
+		}
+		socketWriter.println("300");
+	}
+	
+	@Override
+	public void run() 
+	{
+		try
+		{
+			BufferedReader reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
+			ReceiveMessage(reader);
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		catch(ItemServiceException e)
+		{
+			e.printStackTrace();
+		}
+	}
+}

@@ -1,0 +1,11 @@
+package service;
+
+import exceptions.ItemServiceException;
+import models.Item;
+
+public interface ItemService 
+{	
+	public void addItem(Item newItem) throws ItemServiceException;
+	public Item updateItem(Item newItem) throws ItemServiceException;
+	public void deleteItem(long id) throws ItemServiceException;
+}
